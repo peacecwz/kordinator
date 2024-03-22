@@ -1,5 +1,3 @@
-package command
-
 interface Command
 
 interface CommandHandler<TCommand : Command> {
