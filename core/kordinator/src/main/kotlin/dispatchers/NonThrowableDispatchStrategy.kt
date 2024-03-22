@@ -2,8 +2,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
-class ContinueOnExceptionDispatchStrategy : DispatchStrategy {
-    override suspend fun <T : Message> publish(
+class NonThrowableDispatchStrategy : DispatchStrategy {
+    override suspend fun <T : Message> dispatch(
         message: T,
         messageHandlers: Collection<MessageHandler<T>>,
         dispatcher: CoroutineDispatcher

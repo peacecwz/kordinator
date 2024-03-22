@@ -1,5 +1,5 @@
-interface Query<TResponse>
+interface Query<TResult>
 
-interface QueryHandler<TQuery : Query<TResponse>, TResponse> {
-    suspend fun handle(query: TQuery): TResponse
+interface QueryHandler<TQuery : Query<TResult>, TResult> {
+    suspend fun handle(query: TQuery): TResult
 }

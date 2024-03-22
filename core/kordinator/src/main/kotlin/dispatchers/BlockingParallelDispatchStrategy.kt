@@ -1,7 +1,7 @@
 import kotlinx.coroutines.*
 
 class BlockingParallelDispatchStrategy : DispatchStrategy {
-    override suspend fun <T : Message> publish(
+    override suspend fun <T : Message> dispatch(
         message: T,
         messageHandlers: Collection<MessageHandler<T>>,
         dispatcher: CoroutineDispatcher
