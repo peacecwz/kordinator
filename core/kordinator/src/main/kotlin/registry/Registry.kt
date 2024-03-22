@@ -8,5 +8,5 @@ interface Registry {
         classOfMessage: Class<TMessage>
     ): Collection<MessageHandler<TMessage>>
 
-    fun getPipelineBehaviors(): Collection<Behavior>
+    fun getBehaviors(): Collection<Behavior>
 }

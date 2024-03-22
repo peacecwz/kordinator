@@ -1,1 +1,1 @@
-class HandlerNotFoundException(message: String) : Exception(message)
+class HandlerNotFoundException(handlerName: String) : Exception("$handlerName handler not found")
