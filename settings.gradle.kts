@@ -2,8 +2,7 @@ rootProject.name = "kordinator"
 
 include(
     "core:kordinator",
-    "libs:spring-kordinator",
-    "libs:quarkus-kordinator"
+    "libs:spring-kordinator"
 )
 
 dependencyResolutionManagement {
