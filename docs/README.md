@@ -1,3 +1,3 @@
-# Headline
+# Kordinator
 
 > An awesome project.

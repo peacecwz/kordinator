@@ -13,3 +13,6 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin")
 }
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class) {
+    kotlinOptions.jvmTarget = "21"
+}
