@@ -12,7 +12,4 @@ allprojects {
 
 subprojects {
     apply(plugin = "kotlin")
-
-    dependencies {
-    }
 }
