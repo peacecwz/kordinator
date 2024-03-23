@@ -1,4 +1,4 @@
-class MediatorImpl(
+internal class MediatorImpl(
     private val registry: Registry,
     private val defaultDispatchStrategy: DispatchStrategy = ThrowableDispatchStrategy()
 ) : Mediator {
@@ -36,7 +36,7 @@ class MediatorImpl(
 
     private suspend fun <TMessage, TResult> processBehaviors(
         behaviors: Collection<Behavior>,
-        request: TMessage,
+        message: TMessage,
         handler: MessageHandlerDelegate<TMessage, TResult>
     ): TResult =
         behaviors
@@ -44,9 +44,9 @@ class MediatorImpl(
             .fold(handler)
             { next, pipeline ->
                 {
-                    pipeline.handle(request) {
+                    pipeline.handle(message) {
                         next(it)
                     }
                 }
-            }(request)
+            }(message)
 }
