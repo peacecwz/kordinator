@@ -44,14 +44,15 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
         run: ./gradlew :libs:spring-kordinator:publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
-      - name: Create GitHub Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LIBRARY_VERSION: ${GITHUB_REF#refs/tags/v}
-        run: |
-          LIBRARY_VERSION_EXPANDED="${LIBRARY_VERSION}"
-          CHANGELOG_CONTENT=$(awk "/# \\[${LIBRARY_VERSION_EXPANDED}\\]/,/^# \\[/{print}" CHANGELOG.md)
-          if [ -z "$CHANGELOG_CONTENT" ]; then
-          CHANGELOG_CONTENT="No changelog for version $LIBRARY_VERSION_EXPANDED"
-          fi
-          gh release create "$LIBRARY_VERSION_EXPANDED" -F - <<< "$CHANGELOG_CONTENT"
+      - uses: fregante/release-with-changelog@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-template: '- {title} ← {hash}'
+          template: |
+            ### Changelog
+            
+            {commits}
+            
+            {range}
+            
+            ❤
