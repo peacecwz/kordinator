@@ -1,3 +1,4 @@
+import com.peacecwz.MediatorBuilder
 import fixtures.*
 import io.mockk.coEvery
 import io.mockk.coVerify

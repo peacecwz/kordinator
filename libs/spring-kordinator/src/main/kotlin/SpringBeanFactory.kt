@@ -1,3 +1,4 @@
+import com.peacecwz.ioc.DependencyFactory
 import org.springframework.context.ApplicationContext
 
 class SpringBeanFactory(

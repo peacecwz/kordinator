@@ -1,3 +1,5 @@
+import com.peacecwz.Mediator
+import com.peacecwz.MediatorBuilder
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean

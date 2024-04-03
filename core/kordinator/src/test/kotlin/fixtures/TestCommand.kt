@@ -1,5 +1,5 @@
 package fixtures
 
-import Command
+import com.peacecwz.command.Command
 
 data class TestCommand(val value: String) : Command
