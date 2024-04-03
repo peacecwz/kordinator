@@ -1,3 +1,0 @@
-# Kordinator
-
-> Sahane proje
