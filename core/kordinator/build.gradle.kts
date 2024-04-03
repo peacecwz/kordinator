@@ -22,7 +22,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             groupId = "com.peacecwz"
             artifactId = "kordinator"
-            version = (System.getenv("LIBRARY_VERSION") ?: "0.0.1").replace("/", "")
+            version = project.findProperty("LIBRARY_VERSION")?.toString()?.replace("/", "") ?: "0.0.1"
 
             from(components["java"])
 

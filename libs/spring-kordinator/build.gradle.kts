@@ -32,7 +32,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             groupId = "com.peacecwz"
             artifactId = "spring-3x-kordinator"
-            version = (System.getenv("LIBRARY_VERSION") ?: "0.0.1").replace("/", "")
+            version = project.findProperty("LIBRARY_VERSION")?.toString()?.replace("/", "") ?: "0.0.1"
 
             from(components["java"])
 
