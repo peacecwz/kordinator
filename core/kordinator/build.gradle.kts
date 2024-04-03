@@ -39,6 +39,6 @@ publishing {
 }
 
 signing {
-    useInMemoryPgpKeys(System.getenv("SIGNING_KEY_ID"), System.getenv("SIGNING_KEY"), System.getenv("SIGNING_PASSWORD"))
+    useInMemoryPgpKeys(System.getenv("SIGNING_KEY"), System.getenv("SIGNING_PASSWORD"))
     sign(publishing.publications)
 }
