@@ -23,15 +23,21 @@ jobs:
         run: echo "LIBRARY_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
       - name: Build and Publish Kordinator Core Library
         env:
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           LIBRARY_VERSION: ${{ steps.get_version.outputs.version }}
-        run: ./gradlew :core:publish
+        run: ./gradlew :core:publishing
       - name: Build and Publish Kordinator Spring Boot 3 Library
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           LIBRARY_VERSION: ${{ steps.get_version.outputs.version }}
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
         run: ./gradlew :libs:spring-kordinator:publish
       - name: Create GitHub Release
         env:
