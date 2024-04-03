@@ -33,13 +33,13 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-          LIBRARY_VERSION: ${{ steps.get_version.outputs.version }}
+          LIBRARY_VERSION: $LIBRARY_VERSION
         run: ./gradlew publish
       - name: Build and Publish Kordinator Spring Boot 3 Library
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-          LIBRARY_VERSION: ${{ steps.get_version.outputs.version }}
+          LIBRARY_VERSION: $LIBRARY_VERSION
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
@@ -48,9 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          CHANGELOG_CONTENT=$(awk '/# \['"$VERSION"'\]/,/^# \[/{print}' CHANGELOG.md)
+          CHANGELOG_CONTENT=$(awk '/# \['"$LIBRARY_VERSION"'\]/,/^# \[/{print}' CHANGELOG.md)
           if [ -z "$CHANGELOG_CONTENT" ]; then
-            CHANGELOG_CONTENT="No changelog for version $VERSION"
+            CHANGELOG_CONTENT="No changelog for version $LIBRARY_VERSION"
           fi
-          gh release create $VERSION -F - <<< "$CHANGELOG_CONTENT"
+          gh release create $LIBRARY_VERSION -F - <<< "$CHANGELOG_CONTENT"
