@@ -1,3 +1,4 @@
+import com.peacecwz.Mediator
 import fixtures.TestQuery
 import fixtures.TestQueryHandler
 import kotlinx.coroutines.runBlocking
