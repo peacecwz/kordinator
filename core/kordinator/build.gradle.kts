@@ -29,7 +29,7 @@ publishing {
             pom {
                 name.set("Kordinator")
                 description.set("A simple coroutine-based coordinator library")
-                url.set("https://github.com/peacecwz/kordinator")
+                url.set("https://maven.pkg.github.com/peacecwz/kordinator")
                 packaging = "jar"
                 licenses {
                     license {

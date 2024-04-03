@@ -4,7 +4,9 @@ on:
   push:
     tags:
       - 'v*'
-
+permissions:
+  contents: write
+  packages: write
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -18,13 +20,13 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-      - name: Print version
-        run: echo "Version ${GITHUB_REF#refs/tags/v}"
       - name: Import GPG Key
         uses: crazy-max/ghaction-import-gpg@v3
         with:
           gpg-private-key: ${{ secrets.SIGNING_KEY }}
           passphrase: ${{ secrets.SIGNING_PASSWORD }}
+      - name: Extract Version from Tag
+        run: echo "LIBRARY_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
       - name: Build and Publish Kordinator Core Library
         env:
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
@@ -33,16 +35,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           LIBRARY_VERSION: ${GITHUB_REF#refs/tags/v}
-        run: ./gradlew publish
+        run: ./gradlew publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
       - name: Build and Publish Kordinator Spring Boot 3 Library
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-          LIBRARY_VERSION: ${GITHUB_REF#refs/tags/v}
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-        run: ./gradlew publish
+        run: ./gradlew publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
