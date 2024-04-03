@@ -19,12 +19,35 @@ dependencies {
 
 publishing {
     publications {
-        create("mavenJava", MavenPublication::class) {
+        create<MavenPublication>("mavenJava") {
             groupId = "com.peacecwz"
             artifactId = "kordinator"
             version = System.getenv("LIBRARY_VERSION") ?: "0.0.1"
 
             from(components["java"])
+
+            pom {
+                name.set("Kordinator")
+                description.set("A simple coroutine-based coordinator library")
+                url.set("https://github.com/peacecwz/kordinator")
+                packaging = "jar"
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/peacecwz/kordinator/blob/main/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("peacecwz")
+                        name.set("Baris Ceviz")
+                        email.set("baris@ceviz.dev")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/peacecwz/kordinator.git")
+                }
+            }
         }
     }
     repositories {

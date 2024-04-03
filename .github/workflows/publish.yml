@@ -18,9 +18,6 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-      - name: Extract version from tag
-        id: get_version
-        run: echo "LIBRARY_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
       - name: Import GPG Key
         uses: crazy-max/ghaction-import-gpg@v3
         with:
@@ -33,13 +30,13 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-          LIBRARY_VERSION: $LIBRARY_VERSION
+          LIBRARY_VERSION: ${GITHUB_REF#refs/tags/v}
         run: ./gradlew publish
       - name: Build and Publish Kordinator Spring Boot 3 Library
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-          LIBRARY_VERSION: $LIBRARY_VERSION
+          LIBRARY_VERSION: ${GITHUB_REF#refs/tags/v}
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
@@ -47,6 +44,7 @@ jobs:
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LIBRARY_VERSION: ${GITHUB_REF#refs/tags/v}
         run: |
           CHANGELOG_CONTENT=$(awk '/# \['"$LIBRARY_VERSION"'\]/,/^# \[/{print}' CHANGELOG.md)
           if [ -z "$CHANGELOG_CONTENT" ]; then
