@@ -18,6 +18,8 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+      - name: Print version
+        run: echo "Version ${GITHUB_REF#refs/tags/v}"
       - name: Import GPG Key
         uses: crazy-max/ghaction-import-gpg@v3
         with:
