@@ -62,10 +62,10 @@ publishing {
     }
     repositories {
         maven {
-            url = uri(System.getenv("REGISTRY_URL") ?: "https://maven.pkg.github.com/peacecwz/kordinator")
+            url = uri(project.findProperty("REGISTRY_URL") ?: "https://maven.pkg.github.com/peacecwz/kordinator")
             credentials {
-                username = System.getenv("REGISTRY_USERNAME")
-                password = System.getenv("REGISTRY_PASSWORD")
+                username = project.findProperty("REGISTRY_USERNAME").toString()
+                password = project.findProperty("REGISTRY_PASSWORD").toString()
             }
         }
     }
