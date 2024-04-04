@@ -1,6 +1,7 @@
 import fixtures.TestQuery
 import fixtures.TestQueryHandler
 import io.github.peacecwz.KordinatorConfiguration
+import io.github.peacecwz.Mediator
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -9,7 +10,7 @@ import kotlin.test.Test
 @SpringBootTest(classes = [KordinatorConfiguration::class, TestQueryHandler::class])
 class QueryHandlerTests {
     @Autowired
-    lateinit var mediator: io.github.peacecwz.Mediator
+    lateinit var mediator: Mediator
 
     @Test
     fun `should handle query`() {

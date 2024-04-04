@@ -1,6 +1,6 @@
 package fixtures
 
-import com.peacecwz.query.QueryHandler
+import io.github.peacecwz.query.QueryHandler
 
 class TestQueryHandler : QueryHandler<TestQuery, String> {
     override suspend fun handle(query: TestQuery): String {
