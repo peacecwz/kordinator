@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
+    id("java")
 }
 
 object Versions {
@@ -26,52 +27,7 @@ dependencies {
     testImplementation("io.mockk:mockk:${Versions.MOCKK_VERSION}")
 }
 
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            groupId = "com.peacecwz"
-            artifactId = "spring-3x-kordinator"
-            version = project.findProperty("LIBRARY_VERSION")?.toString()?.replace("/", "") ?: "0.0.1"
-
-            from(components["java"])
-
-            pom {
-                name.set("Kordinator")
-                description.set("A simple coroutine-based coordinator library")
-                url.set("https://maven.pkg.github.com/peacecwz/kordinator")
-                packaging = "jar"
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://github.com/peacecwz/kordinator/blob/main/LICENSE")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("peacecwz")
-                        name.set("Baris Ceviz")
-                        email.set("baris@ceviz.dev")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/peacecwz/kordinator.git")
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            url = uri(project.findProperty("REGISTRY_URL")?.toString() ?: "https://maven.pkg.github.com/peacecwz/kordinator")
-            credentials {
-                username = System.getenv("REGISTRY_USERNAME")
-                password = System.getenv("REGISTRY_PASSWORD")
-            }
-        }
-    }
-}
-
-signing {
-    useInMemoryPgpKeys(System.getenv("SIGNING_KEY"), System.getenv("SIGNING_PASSWORD"))
-    sign(publishing.publications)
+java {
+    withSourcesJar()
+    withJavadocJar()
 }

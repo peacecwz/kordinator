@@ -1,4 +1,4 @@
-import com.peacecwz.Mediator
+import io.github.peacecwz.KordinatorConfiguration
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 class KordinatorConfigurationTest {
 
     @Autowired
-    lateinit var mediator: Mediator
+    lateinit var mediator: io.github.peacecwz.Mediator
 
     @Test
     fun contextLoads() {
