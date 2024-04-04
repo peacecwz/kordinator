@@ -31,14 +31,25 @@ jobs:
         run: |
           VERSION="$MAJOR.$MINOR.$PATCH"
           echo $VERSION
-      - name: Build and Publish Library
+      - name: Build and Publish Library to Github Packages
         env:
+          REGISTRY_URL: ${{ env.GHREGISTRY_URL }}
           LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_ACTOR: ${{ github.actor }}
+          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_USERNAME: ${{ github.actor }}
+        run: ./gradlew publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
+      - name: Build and Publish Library to Sonatype Repository
+        env:
+          REGISTRY_URL: ${{ env.OSSRH_URL }}
+          LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          REGISTRY_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          REGISTRY_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         run: ./gradlew publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
       - uses: fregante/release-with-changelog@v3
         with:
