@@ -31,21 +31,21 @@ jobs:
         run: |
           VERSION="$MAJOR.$MINOR.$PATCH"
           echo $VERSION
-      - name: Build and Publish Library to Github Packages
-        env:
-          REGISTRY_URL: ${{ env.GHREGISTRY_URL }}
-          REGISTRY_USERNAME: ${{ github.actor }}
-          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
-          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-        run: ./gradlew publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
       - name: Build and Publish Library to Sonatype Repository
         env:
           REGISTRY_URL: ${{ env.OSSRH_URL }}
           REGISTRY_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: ./gradlew publish -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
+      - name: Build and Publish Library to Github Packages
+        env:
+          REGISTRY_URL: ${{ env.GHREGISTRY_URL }}
+          REGISTRY_USERNAME: ${{ github.actor }}
+          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
