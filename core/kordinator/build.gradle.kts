@@ -1,8 +1,13 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
+group = "dev.ceviz"
+
 plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
     id("java")
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 object Versions {
@@ -19,9 +24,6 @@ dependencies {
 }
 
 java {
-    withSourcesJar()
-    withJavadocJar()
-
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
@@ -32,42 +34,99 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     }
 }
 
+// Define sourcesJar task
+val sourcesJar = tasks.register("sourcesJar", Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets["main"].allSource)
+}
+
+// Define javadocJar task
+val javadocJar = tasks.register("javadocJar", Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.named("javadoc"))
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            from(components["java"])
+            groupId = "dev.ceviz"
             artifactId = "kordinator"
-            groupId = "io.github.peacecwz"
-            version = project.findProperty("LIBRARY_VERSION")?.toString() ?: "0.1.0"
-            description = "Kordinator is simple and lightweight mediator library with Kotlin coroutines supports"
+            version = System.getenv("LIBRARY_VERSION") ?: "0.0.1"
 
-            pom {
-                name.set("Kordinator")
-                version = project.findProperty("LIBRARY_VERSION")?.toString() ?: "0.1.0"
-                description.set("Kordinator is simple and lightweight mediator library with Kotlin coroutines supports")
-                url.set("https://github.com/peacecwz/kordinator")
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("peacecwz")
-                        name.set("Baris Ceviz")
-                        email.set("baris@ceviz.dev")
-                    }
-                }
-            }
+            from(components["java"])
+            artifact(sourcesJar.get())
+            artifact(javadocJar.get())
         }
     }
+}
 
-    repositories {
-        mavenCentral()
-        maven {
-            url = uri("https://jitpack.io")
+mavenPublishing {
+    coordinates("dev.ceviz", "kordinator", "0.0.1")
+
+    pom {
+        name.set("Kordinator")
+        description.set("Kordinator is a lightweight library to implement Mediator Pattern with native Coroutine support")
+        inceptionYear.set("2024")
+        url.set("https://github.com/peacecwz/kordinator")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://www.github.com/peacecwz/kordinator/blob/master/LICENSE")
+                distribution.set("https://www.github.com/peacecwz/kordinator/blob/master/LICENSE")
+            }
         }
+        developers {
+            developer {
+                id.set("peacecwz")
+                name.set("Baris Ceviz")
+                url.set("https://github.com/peacecwz")
+            }
+        }
+        scm {
+            url.set("https://github.com/peacecwz/kordinator/")
+            connection.set("scm:git:git://github.com/peacecwz/kordinator.git")
+            developerConnection.set("scm:git:ssh://git@github.com/peacecwz/kordinator.git")
+        }
+    }
+}
+
+
+afterEvaluate {
+    tasks.named("publishMavenPublicationToMavenCentralRepository") {
+        mustRunAfter(javadocJar.get())
+        mustRunAfter(sourcesJar.get())
+        mustRunAfter("signMavenJavaPublication")
+
+    }
+    tasks.named("generateMetadataFileForMavenJavaPublication") {
+        mustRunAfter("kotlinSourcesJar")
+    }
+
+    tasks.named("generateMetadataFileForMavenPublication") {
+        mustRunAfter("kotlinSourcesJar")
+    }
+    tasks.named("generateMetadataFileForMavenPublication") {
+        mustRunAfter("plainJavadocJar")
+    }
+    tasks.named("generateMetadataFileForMavenJavaPublication") {
+        mustRunAfter("plainJavadocJar")
+    }
+    tasks.named("signMavenPublication") {
+        mustRunAfter(javadocJar.get())
+        mustRunAfter(sourcesJar.get())
+    }
+    tasks.named("publishMavenJavaPublicationToMavenCentralRepository") {
+        mustRunAfter("signMavenPublication")
     }
 }
 

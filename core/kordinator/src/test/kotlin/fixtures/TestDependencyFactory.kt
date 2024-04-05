@@ -1,6 +1,6 @@
 package fixtures
 
-import io.github.peacecwz.ioc.DependencyFactory
+import dev.ceviz.ioc.DependencyFactory
 
 class TestDependencyFactory(
     private val handlerMap: HashMap<Class<*>, Any>

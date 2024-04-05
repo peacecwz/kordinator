@@ -15,7 +15,7 @@ class MediatorTests {
                 TestCommandHandler::class.java to mockHandler
             )
         )
-        val mediator = io.github.peacecwz.MediatorBuilder(dependencyFactory).build()
+        val mediator = dev.ceviz.MediatorBuilder(dependencyFactory).build()
         val command = TestCommand("hello")
 
         // when
@@ -37,7 +37,7 @@ class MediatorTests {
                 TestQueryHandler::class.java to mockHandler
             )
         )
-        val mediator = io.github.peacecwz.MediatorBuilder(dependencyFactory).build()
+        val mediator = dev.ceviz.MediatorBuilder(dependencyFactory).build()
         val query = TestQuery(testValue)
         coEvery { mockHandler.handle(query) } returns "Handler: $testValue"
 
@@ -61,7 +61,7 @@ class MediatorTests {
                 TestQueryHandler::class.java to mockHandler
             )
         )
-        val mediator = io.github.peacecwz.MediatorBuilder(dependencyFactory).build()
+        val mediator = dev.ceviz.MediatorBuilder(dependencyFactory).build()
         val query = TestQuery(testValue)
 
         // when

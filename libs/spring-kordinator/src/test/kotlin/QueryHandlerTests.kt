@@ -1,7 +1,7 @@
 import fixtures.TestQuery
 import fixtures.TestQueryHandler
-import io.github.peacecwz.KordinatorConfiguration
-import io.github.peacecwz.Mediator
+import dev.ceviz.KordinatorConfiguration
+import dev.ceviz.Mediator
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

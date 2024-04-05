@@ -33,24 +33,24 @@ jobs:
           echo $VERSION
       - name: Build and Publish Library to Sonatype Repository
         env:
-          REGISTRY_URL: https://s01.oss.sonatype.org/content/repositories/snapshots/
-          REGISTRY_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          REGISTRY_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
           LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
-          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-        run: ./gradlew publish -PREGISTRY_URL="https://s01.oss.sonatype.org/content/repositories/snapshots/" -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
-      - name: Build and Publish Library to Github Packages
-        env:
-          REGISTRY_URL: ${{ env.GHREGISTRY_URL }}
-          REGISTRY_USERNAME: ${{ github.actor }}
-          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
-          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-        run: ./gradlew publish -PREGISTRY_URL=${{ env.REGISTRY_URL }} -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
+          SIGNING_KEY: ${{ secrets.SIGNING_ORIGINAL_KEY }}
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
+      # - name: Build and Publish Library to Github Packages
+      #   env:
+      #     REGISTRY_URL: ${{ env.GHREGISTRY_URL }}
+      #     REGISTRY_USERNAME: ${{ github.actor }}
+      #     REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      #     LIBRARY_VERSION: $MAJOR.$MINOR.$PATCH
+      #     SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+      #     SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+      #     SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      #   run: ./gradlew publish -PREGISTRY_URL=${{ env.REGISTRY_URL }} -PLIBRARY_VERSION=${{ env.LIBRARY_VERSION }}
       - uses: fregante/release-with-changelog@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

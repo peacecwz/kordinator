@@ -1,6 +1,6 @@
 package fixtures
 
-import io.github.peacecwz.command.CommandHandler
+import dev.ceviz.command.CommandHandler
 
 class TestCommandHandler : CommandHandler<TestCommand> {
     override suspend fun handle(command: TestCommand) {
