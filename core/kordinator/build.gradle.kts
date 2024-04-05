@@ -13,6 +13,8 @@ plugins {
 object Versions {
     const val COROUTINE_VERSION = "1.8.0"
     const val MOCKK_VERSION = "1.12.0"
+    val LIBRARY_VERSION: String =
+        (project.findProperty("LIBRARY_VERSION") ?: System.getenv("LIBRARY_VERSION") ?: "0.0.1") as String
 }
 
 dependencies {
@@ -61,7 +63,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             groupId = "dev.ceviz"
             artifactId = "kordinator"
-            version = project.findProperty("LIBRARY_VERSION")?.toString() ?: "0.0.1"
+            version = Versions.LIBRARY_VERSION
 
             from(components["java"])
             artifact(sourcesJar.get())
@@ -71,7 +73,7 @@ publishing {
 }
 
 mavenPublishing {
-    coordinates("dev.ceviz", "kordinator", "0.0.1")
+    coordinates("dev.ceviz", "kordinator", Versions.LIBRARY_VERSION)
 
     pom {
         name.set("Kordinator")
