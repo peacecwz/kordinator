@@ -10,13 +10,11 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
-object Versions {
-    const val COROUTINE_VERSION = "1.8.0"
-    const val SPRING_BOOT = "3.2.4"
-    const val MOCKK_VERSION = "1.12.0"
-    val LIBRARY_VERSION: String =
-        (project.findProperty("LIBRARY_VERSION") ?: System.getenv("LIBRARY_VERSION") ?: "0.0.1") as String
-}
+val COROUTINE_VERSION = "1.8.0"
+val SPRING_BOOT = "3.2.4"
+val MOCKK_VERSION = "1.12.0"
+val LIBRARY_VERSION: String =
+    (project.findProperty("LIBRARY_VERSION") ?: System.getenv("LIBRARY_VERSION") ?: "0.0.1") as String
 
 tasks.test {
     useJUnitPlatform()
@@ -24,14 +22,18 @@ tasks.test {
 
 dependencies {
     implementation(project(":core:kordinator"))
-    implementation("org.springframework.boot:spring-boot-autoconfigure:${Versions.SPRING_BOOT}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINE_VERSION}")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:${Versions.SPRING_BOOT}")
+    // Spring Boot
+    implementation("org.springframework.boot:spring-boot-autoconfigure:${SPRING_BOOT}")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${SPRING_BOOT}")
+
+    // Kotlin Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${COROUTINE_VERSION}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+
+    // Mockk
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("io.mockk:mockk:${Versions.MOCKK_VERSION}")
+    testImplementation("io.mockk:mockk:${MOCKK_VERSION}")
 }
 
 java {
@@ -66,7 +68,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             groupId = "dev.ceviz"
             artifactId = "spring-3x-kordinator"
-            version = Versions.LIBRARY_VERSION
+            version = LIBRARY_VERSION
 
             from(components["java"])
             artifact(sourcesJar.get())
@@ -76,7 +78,7 @@ publishing {
 }
 
 mavenPublishing {
-    coordinates("dev.ceviz", "spring-3x-kordinator", Versions.LIBRARY_VERSION)
+    coordinates("dev.ceviz", "spring-3x-kordinator", LIBRARY_VERSION)
 
     pom {
         name.set("Spring 3.x Kordinator")
