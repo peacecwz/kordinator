@@ -23,7 +23,7 @@ jobs:
       - name: Import GPG Key
         uses: crazy-max/ghaction-import-gpg@v3
         with:
-          gpg-private-key: ${{ secrets.SIGNING_KEY }}
+          gpg-private-key: ${{ secrets.SIGNING_ORIGINAL_KEY }}
           passphrase: ${{ secrets.SIGNING_PASSWORD }}
       - name: Extract version from tag
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
