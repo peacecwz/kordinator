@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Bean
 @AutoConfiguration
 open class KordinatorConfiguration {
     @Bean
-    open fun kordinatorSpringBeanFactory(
+    open fun kordinatorBeanFactory(
         applicationContext: ApplicationContext
     ): SpringBeanFactory {
         return SpringBeanFactory(applicationContext)
     }
 
     @Bean
-    open fun kordinator(factory: SpringBeanFactory): Mediator {
-        return MediatorBuilder(factory).build()
+    open fun mediator(kordinatorBeanFactory: SpringBeanFactory): Mediator {
+        return MediatorBuilder(kordinatorBeanFactory).build()
     }
 }
