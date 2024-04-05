@@ -61,7 +61,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             groupId = "dev.ceviz"
             artifactId = "kordinator"
-            version = project.findProperty("LIB_VERSION")?.toString() ?: "0.0.1"
+            version = project.findProperty("LIBRARY_VERSION")?.toString() ?: "0.0.1"
 
             from(components["java"])
             artifact(sourcesJar.get())
