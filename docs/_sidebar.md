@@ -1,5 +1,6 @@
 - [Getting Started](README.md)
 - [Usage](usage.md)
+- [Examples](examples.md)
 - [Contributing](contributing.md)
 - [License](https://github.com/peacecwz/kordinator/blob/main/LICENSE)
 - [Releases](https://github.com/peacecwz/kordinator/releases)
