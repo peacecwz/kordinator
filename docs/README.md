@@ -48,11 +48,11 @@ implementation("dev.ceviz:kordinator:1.0.0")
 
 ### Basic Usage
 
-You can find basic usage examples in the docs page [here](docs/examples/basic.md).
+You can find basic usage examples in the docs page [here](examples/basic.md).
 
 ### Spring Boot 3 Integration
 
-You can find Spring Boot 3 integration examples in the docs page [here](docs/examples/spring-boot.md).
+You can find Spring Boot 3 integration examples in the docs page [here](examples/spring-boot.md).
 
 ## License
 
