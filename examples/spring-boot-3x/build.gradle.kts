@@ -23,7 +23,7 @@ configurations {
 repositories {
     mavenCentral()
 }
-val KORDINATOR_VERSION = "0.1.2"
+val KORDINATOR_VERSION = "1.0.0"
 dependencies {
     implementation("dev.ceviz:kordinator:$KORDINATOR_VERSION")
     implementation("dev.ceviz:spring-3x-kordinator:$KORDINATOR_VERSION")
