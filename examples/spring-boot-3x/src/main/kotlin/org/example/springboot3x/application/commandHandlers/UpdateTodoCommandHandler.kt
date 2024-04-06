@@ -16,5 +16,4 @@ class UpdateTodoCommandHandler(
             repository.update(it)
         }
     }
-
 }
