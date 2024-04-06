@@ -3,9 +3,7 @@
 Kordinator is a powerful Kotlin library designed to simplify communication between components in your application,
 leveraging the full potential of Kotlin Coroutines for asynchronous and non-blocking operations. Perfect for projects of
 any size, from small to enterprise-level, Kordinator introduces a robust way to manage command and event handling with
-dynamic dependency injection and support for interruptible behaviors, all while seamlessly integrating with Spring Boot
-
-3.
+dynamic dependency injection and support for interruptible behaviors, all while seamlessly integrating with Spring Boot 3.x
 
 ## Features
 
