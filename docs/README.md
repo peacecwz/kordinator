@@ -1,6 +1,6 @@
 # Kordinator
 
-Kordinator is a lightweight, flexible, and easy-to-use Kotlin library that provides advanced features for managing
+Kordinator is a lightweight, flexible, and easy-to-use MediatR pattern library that provides advanced features for managing
 commands and queries in your application. It is designed to help you write clean, concise, and maintainable code by
 using native Kotlin coroutines and dynamic dependency injection.
 
